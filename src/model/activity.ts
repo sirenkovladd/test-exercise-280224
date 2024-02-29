@@ -1,5 +1,6 @@
 import { SystemError } from "../error";
 import { Bored } from "../service/bored";
+import { User } from "./user";
 
 type BasicRecord = Record<string, unknown>;
 
@@ -12,9 +13,11 @@ export type ActivityResponse =
 
 export class Activity {
   private bored: Bored;
+  private user: User;
 
-  constructor(bored: Bored) {
+  constructor(bored: Bored, user: User) {
     this.bored = bored;
+    this.user = user;
   }
 
   private mapAccessibility(body: BasicRecord): string {
@@ -48,8 +51,18 @@ export class Activity {
     return "High";
   }
 
-  async getActivity(): Promise<ActivityResponse> {
+  async getActivity(user?: string): Promise<ActivityResponse> {
     const result = await this.bored.getActivity();
+    if (user) {
+      const userData = await this.user.getUser(user);
+      if (userData) {
+        return {
+          ...result,
+          accessibility: userData.accessibility,
+          price: userData.price,
+        };
+      }
+    }
     return {
       ...result,
       accessibility: this.mapAccessibility(result),

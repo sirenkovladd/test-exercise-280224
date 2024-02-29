@@ -12,4 +12,12 @@ export class User {
       "INSERT INTO account (name, accessibility, price) VALUES (?, ?, ?);";
     await this.db.runQuery(query, [name, accessibility, price]);
   }
+
+  async getUser(name: string) {
+    const [data] = await this.db.runQuery<{
+      accessibility: string;
+      price: string;
+    }>("select accessibility, price from account where name = ?", [name]);
+    return data;
+  }
 }

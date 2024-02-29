@@ -19,10 +19,19 @@ export class Controller {
     return ["Internal server error", 500];
   }
 
+  private getUser(req: express.Request): string | undefined {
+    const user = req.query.user;
+    if (typeof user === "string") {
+      return user;
+    }
+    return undefined;
+  }
+
   initRoutes(app: express.Express) {
-    app.get("/activity", async (_req, res) => {
+    app.get("/activity", async (req, res) => {
       try {
-        const activity = await this.model.activity.getActivity();
+        const user = this.getUser(req);
+        const activity = await this.model.activity.getActivity(user);
         res.json(activity);
       } catch (error) {
         console.error("activity", error);

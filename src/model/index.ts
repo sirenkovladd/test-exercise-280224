@@ -7,7 +7,7 @@ export class Model {
   readonly user: User;
 
   constructor(service: Service) {
-    this.activity = new Activity(service.bored);
     this.user = new User(service.db);
+    this.activity = new Activity(service.bored, this.user);
   }
 }
