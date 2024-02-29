@@ -1,0 +1,49 @@
+{
+  "name": "glia-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "wireit",
+    "build": "wireit",
+    "start": "wireit",
+    "lint": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "tsc --build --pretty",
+      "clean": "if-file-deleted",
+      "files": ["src/**/*.ts", "src/**/*.js", "tsconfig.json"],
+      "output": ["dist/**"]
+    },
+    "start": {
+      "dependencies": ["build"],
+      "command": "node --env-file=.env --enable-source-maps dist/index.js",
+      "files": ["dist/**"],
+      "service": true
+    },
+    "lint": {
+      "command": "biome ci .",
+      "files": ["src/**/*.ts", "src/**/*.js", "biome.json"]
+    },
+    "test": {
+      "dependencies": ["build"],
+      "command": "tap --disable-coverage --allow-empty-coverage dist/test/*.test.js"
+    }
+  },
+  "author": "Vlad Sirenko <vlad@sirenko.ca>",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@types/express": "^4.17.21",
+    "light-my-request": "^5.11.1",
+    "tap": "^18.7.0",
+    "typescript": "^5.3.3",
+    "wireit": "^0.14.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7",
+    "undici": "^6.6.2"
+  }
+}

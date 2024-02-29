@@ -1,0 +1,28 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["node_modules/**/*", "dist/**/*", ".tap", ".wireit"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "nursery": {
+        "noNodejsModules": "off"
+      }
+    },
+    "ignore": [
+      "node_modules/**/*",
+      "dist/**/*",
+      "src/test/*.test.ts",
+      ".tap",
+      ".wireit"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "ignore": ["node_modules/**/*", "dist/**/*", ".tap", ".wireit"]
+  }
+}
