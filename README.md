@@ -38,6 +38,7 @@ npm run build
 
 ```bash
 curl -X GET http://localhost:3000/activity
+curl -X GET http://localhost:3000/activity?user=John
 ```
 
 ### POST /user
